@@ -26,7 +26,7 @@ def lambda_handler(event: any, context: any):
 
 
 if __name__ == "__main__":
-    os.environ["TABLE_NAME"] = "visit-count-table"
-    test_event = {"user": "local_pixegami"}
+    os.environ["TABLE_NAME"] = "visit-count"
+    test_event = {"user": "maxwell"}
     result = lambda_handler(test_event, None)
     print(result)

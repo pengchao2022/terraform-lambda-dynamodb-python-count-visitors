@@ -7,6 +7,7 @@ on:
     paths:
       - '.github/workflows/deploy.yaml'
       - '**/*.tf'
+      - 'lambda_function.py'
 
 
 permissions:
@@ -42,5 +43,5 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve -input=false
 
-        
+
 
