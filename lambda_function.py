@@ -3,13 +3,13 @@ import boto3
 import os
 
 def lambda_handler(event, context):
-    # 1. 尝试解析 API Gateway 传来的 body
+    # try to parse the data from API Gateway
     try:
-        # 如果是 API Gateway 触发，body 是 JSON 字符串
+        # if it's API Gateway then body should be json
         body = json.loads(event.get("body", "{}"))
         user = body.get("user")
     except:
-        # 如果是测试触发（直接传字典），则直接获取
+        
         user = event.get("user")
 
     if not user:
@@ -19,20 +19,20 @@ def lambda_handler(event, context):
             "body": json.dumps({"message": "Missing 'user' parameter"})
         }
 
-    # 2. DynamoDB 操作
+    # dynamodb operation
     dynamodb = boto3.resource("dynamodb")
     table_name = os.environ["TABLE_NAME"]
     table = dynamodb.Table(table_name)
 
-    # 获取当前计数
+    # get the current count
     response = table.get_item(Key={"user": user})
     visit_count = response.get("Item", {}).get("visit_count", 0)
 
-    # 增加计数并更新
+    # increment the count and update
     visit_count += 1
     table.put_item(Item={"user": user, "visit_count": visit_count})
 
-    # 3. 返回符合 API Gateway 格式的响应
+    # returns a response conforming to the API Gateway format
     message = f"Hello {user}! You have visited us {visit_count} times."
     
     return {
