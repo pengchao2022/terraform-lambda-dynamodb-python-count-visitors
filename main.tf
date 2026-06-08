@@ -24,3 +24,19 @@ module "lambda" {
   
   
 }
+
+module "api_gateway" {
+  source = "git::https://github.com/pengchao2022/aws-terraform-modules.git//modules/api_gateway?ref=api_gateway-1.1"
+  
+  api_name = "visit-counter-api"
+  lambda_invoke_arn    = module.lambda.lambda_arn
+  lambda_function_name = module.lambda.lambda_name 
+}
+
+# outputs API URL
+output "api_endpoint_url" {
+  value = module.api_gateway.invoke_url
+
+}
+
+  
