@@ -13,7 +13,7 @@ module "dynamodb" {
 }
 
 module "lambda" {
-  source = "git::https://github.com/pengchao2022/aws-terraform-modules.git//modules/lambda?ref=lambda-1.0"
+  source = "git::https://github.com/pengchao2022/aws-terraform-modules.git//modules/lambda?ref=lambda-1.1"
 
   # write the variables according to the lambda nodule variables.tf
   function_name = "maxwell-prod-visit-counter"
