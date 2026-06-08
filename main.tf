@@ -13,7 +13,9 @@ module "dynamodb" {
 }
 
 module "lambda" {
-  source = "git::https://github.com/pengchao2022/aws-terraform-modules.git//modules/lambda?ref=lambda-1.2"
+  source = "git::https://github.com/pengchao2022/aws-terraform-modules.git//modules/lambda?ref=lambda-1.3"
+  # force re-deploy when python code get changed
+  source_code_hash = filebase64sha256("${path.module}/lambda_function.py")
 
   # write the variables according to the lambda nodule variables.tf
   function_name = "maxwell-prod-visit-counter"
